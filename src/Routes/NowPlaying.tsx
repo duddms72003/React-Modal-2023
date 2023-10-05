@@ -65,7 +65,7 @@ const Overlay = styled(motion.div)`
 const BigMovie = styled(motion.div)`
   position: absolute;
   width: 80vw;
-  height: 80vh;
+  height: 90vh;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -84,7 +84,7 @@ const BigCover = styled.div`
 const BigContents = styled.p`
   overflow-y: scroll;
   padding: 20px;
-  height: 200px;
+  height: 260px;
   top: 0;
 `;
 
@@ -209,7 +209,7 @@ function NowPlaying() {
                   animate={{ opacity: 1 }}
                 />
                 <BigMovie
-                  style={{ top: scrollY.get() + 100 }}
+                  style={{ top: scrollY.get() + 50 }}
                   layoutId={bigMovieMatch.params.movieId}
                 >
                   {clickedMovie && (
