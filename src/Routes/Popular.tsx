@@ -145,6 +145,7 @@ function Popular() {
   const bigMovieMatch: PathMatch<string> | null = useMatch("movies/:movieId");
   const movieId: string = bigMovieMatch?.params.movieId || "";
   const { scrollY } = useScroll();
+
   const [index, setIndex] = useState(0);
 
   const { data, isLoading } = useQuery<IAPIResponse>(
