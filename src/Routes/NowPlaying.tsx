@@ -142,7 +142,9 @@ const boxVariants = {
 
 function NowPlaying() {
   const navigate = useNavigate();
-  const bigMovieMatch: PathMatch<string> | null = useMatch("/movies/:movieId");
+  const bigMovieMatch: PathMatch<string> | null = useMatch(
+    "now-playing/movies/:movieId"
+  );
   const movieId: string = bigMovieMatch?.params.movieId || "";
   const { scrollY } = useScroll();
   const { data, isLoading } = useQuery<IAPIResponse>(
@@ -159,7 +161,7 @@ function NowPlaying() {
     navigate(`movies/${movieId}`);
   };
 
-  const closeClick = () => navigate("now-playing");
+  const closeClick = () => navigate("/now-playing");
   const clickedMovie =
     bigMovieMatch?.params.movieId &&
     data?.results.find((movie) => movie.id === +bigMovieMatch.params.movieId!);

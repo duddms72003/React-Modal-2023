@@ -158,15 +158,8 @@ function ComingSoon() {
 
   const [index, setIndex] = useState(0);
 
-  // const onBoxClicked = (movieId: number) => {
-  //   navigate(`movies/${movieId}`);
-  // };
-
   const onBoxClicked = (movieId: number) => {
-    // `bigMovieMatch`가 없거나 빈 경우, 현재 경로에 "coming-soon"을 추가합니다.
-    // 그렇지 않으면 현재 경로는 유지하고 "movies/:movieId"를 추가합니다.
-    const currentPath = bigMovieMatch ? "" : "/coming-soon";
-    navigate(`${currentPath}/movies/${movieId}`);
+    navigate(`movies/${movieId}`);
   };
 
   const closeClick = () => navigate("/coming-soon");
