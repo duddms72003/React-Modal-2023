@@ -8,7 +8,7 @@ import {
 } from "../api";
 import { motion, AnimatePresence, useScroll } from "framer-motion";
 import { styled } from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
@@ -22,7 +22,7 @@ const Loader = styled.div`
   margin: 80px;
 `;
 
-const ItemList = styled.ul`
+const ItemList = styled(motion.ul)`
   margin: 150px 50px auto 50px;
 `;
 
@@ -32,6 +32,9 @@ const Items = styled(motion.li)`
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
   cursor: pointer;
+  > div {
+    margin: 0 auto;
+  }
 `;
 
 const Image = styled(motion.div)<{ bgphoto: string }>`
@@ -115,13 +118,22 @@ const CloseBtn = styled.button`
 
 const rowVariants = {
   hidden: {
-    x: window.outerWidth + 5,
+    opacity: 0,
+    y: 50, // 숨겨진 상태에서 아래로 이동
   },
   visible: {
-    x: 0,
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5, // 애니메이션 지속 시간 설정
+    },
   },
   exit: {
-    x: -window.outerWidth - 5,
+    opacity: 0,
+    y: -50, // 나가는 상태에서 위로 이동
+    transition: {
+      duration: 0.5, // 애니메이션 지속 시간 설정
+    },
   },
 };
 
@@ -145,11 +157,10 @@ function Popular() {
   const bigMovieMatch: PathMatch<string> | null = useMatch("movies/:movieId");
   const movieId: string = bigMovieMatch?.params.movieId || "";
   const { scrollY } = useScroll();
-
   const [index, setIndex] = useState(0);
 
   const { data, isLoading } = useQuery<IAPIResponse>(
-    ["movies", "nowPlaying"],
+    ["movies", "popular"],
     getPopular
   );
 
@@ -172,16 +183,16 @@ function Popular() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <ItemList>
+          <ItemList
+            variants={rowVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            transition={{ type: "tween", duration: 0.5 }}
+            key={index}
+          >
             <AnimatePresence initial={false}>
-              <Items
-                variants={rowVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                transition={{ type: "tween", duration: 1 }}
-                key={index}
-              >
+              <Items>
                 {data?.results.slice(1).map((movie) => (
                   <div key={movie.id}>
                     <Image
