@@ -32,6 +32,9 @@ const Items = styled(motion.li)`
   grid-template-columns: repeat(3, 1fr);
   width: 100%;
   cursor: pointer;
+  > div {
+    margin: 0 auto;
+  }
 `;
 
 const Image = styled(motion.div)<{ bgphoto: string }>`
